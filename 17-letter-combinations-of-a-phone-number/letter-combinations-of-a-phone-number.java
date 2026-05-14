@@ -1,56 +1,38 @@
-import java.util.*;
-
 class Solution {
-
-    String[] map = {
-        "",     // 0
-        "",     // 1
-        "abc",  // 2
-        "def",  // 3
-        "ghi",  // 4
-        "jkl",  // 5
-        "mno",  // 6
-        "pqrs", // 7
-        "tuv",  // 8
-        "wxyz"  // 9
-    };
-
     public List<String> letterCombinations(String digits) {
-
         List<String> result = new ArrayList<>();
-
-        if (digits.length() == 0) {
+        if(digits.length()==0){
             return result;
         }
 
-        backtrack(digits, 0, new StringBuilder(), result);
+        String[] map = {
+            "",
+            "",
+            "abc",
+            "def",
+            "ghi",
+            "jkl",
+            "mno",
+            "pqrs",
+            "tuv",
+            "wxyz"
+        };
 
+        backtracking(digits,0,new StringBuilder(),result,map);
         return result;
     }
-
-    private void backtrack(String digits, int index,
-                           StringBuilder current,
-                           List<String> result) {
-
-        // Base case
-        if (index == digits.length()) {
+    public void backtracking(String digits,int index,StringBuilder current,List<String> result,String[] map){
+        if(index==digits.length()){
             result.add(current.toString());
             return;
         }
 
-        // Convert char digit to number
-        int digit = digits.charAt(index) - '0';
+        String letters = map[digits.charAt(index)-'0'];
 
-        String letters = map[digit];
-
-        for (char ch : letters.toCharArray()) {
-
+        for(char ch : letters.toCharArray()){
             current.append(ch);
-
-            backtrack(digits, index + 1, current, result);
-
-            // remove last character
-            current.deleteCharAt(current.length() - 1);
+            backtracking(digits,index+1,current,result,map);
+            current.deleteCharAt(current.length()-1);
         }
     }
 }
